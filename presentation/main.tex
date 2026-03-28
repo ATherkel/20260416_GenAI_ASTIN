@@ -48,6 +48,7 @@
 \usepackage{fontawesome5}        % icons (available on Overleaf)
 \usepackage{enumitem}
 \setlist[itemize]{label=\textcolor{accent}{\textbullet}}
+\usepackage{multicol}
 
 % ── Colour palettes ─────────────────────────────────────────
 \ifdarkmode
@@ -213,7 +214,36 @@
   \end{columns}
 \end{frame}
 % ── Section 1 ────────────────────────────────────────────────
-\begin{frame}{GenAI as a Daily Companion}
+\begin{frame}{Anvendelseseksempler}
+    \slidetarget
+    \begin{multicols}{2}
+      \begin{enumerate}[label=\textcolor{accent}{\arabic*.}]
+        \item "uvigtige" unittests
+        \item Forslag til integrationstests
+        \item Forbedre kodedokumentation
+          \begin{enumerate}[label=\textcolor{accentLight}{\arabic*.}]
+            \item Inline, docstrings, API docs, typehints
+            \item Markdown
+          \end{enumerate}
+        \item Kodereview
+          \begin{enumerate}[label=\textcolor{accentLight}{\arabic*.}]
+            \item Har jeg glemt eller overset noget?
+            \item Hvordan gør jeg det her bedre?
+            \item Mere effektivt? Mere læsbar? Mere robust?
+          \end{enumerate}
+        \item Beskriv hvad jeg har lavet. Kom med forslag
+        \item Noget jeg ikke kan finde ud af: Opret "skills" (evt. med GenAI hjælp)
+        \item Git
+          \begin{enumerate}[label=\textcolor{accentLight}{\arabic*.}]
+            \item Commit-beskeder
+            \item PR-beskrivelser
+            \item PR review
+          \end{enumerate}
+      \end{enumerate}
+    \end{multicols}
+\end{frame}
+
+\begin{frame}{GenAI i hverdagen}
   \slidetarget
   \begin{itemize}
     \item Large Language Models are \textcolor{accentLight}{general-purpose reasoning tools}
