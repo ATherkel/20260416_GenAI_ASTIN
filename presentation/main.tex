@@ -12,6 +12,29 @@
 % \darkmodefalse
 % ─────────────────────────────────────────────────────────────
 
+% ── HYBRID THUMBNAIL WORKFLOW (Overleaf): ────────────────────
+%   1. Set \thumbsready to false  → compiles without the overview grid
+%   2. Compile on Overleaf, download the PDF
+%   3. Rename it to "slides-thumbs.pdf", upload to the Overleaf project root
+%   4. Set \thumbsready to true   → overview slide reads thumbnails from that file
+%   5. Recompile. Done! Repeat steps 1-4 if slides change significantly.
+\newif\ifthumbsready
+\thumbsreadytrue
+\thumbsreadyfalse
+% ─────────────────────────────────────────────────────────────
+
+% Auto-incrementing slide target.
+% Put \slidetarget at the top of each frame you want in the overview.
+% Frames without it (e.g. title, agenda) are skipped automatically.
+% \theslideidx gives the total number of tracked slides.
+\newcounter{slideidx}
+\newcommand{\slidetarget}{%
+  \stepcounter{slideidx}%
+  \hypertarget{slide\theslideidx}{}%
+  % record PDF page number for this slide index
+  \expandafter\xdef\csname slidepage@\theslideidx\endcsname{\thepage}%
+}
+
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
@@ -79,7 +102,7 @@
 \setbeamertemplate{footline}{%
   \hspace{1em}%
   {\usebeamercolor[fg]{footer}\footnotesize
-    \insertshorttitle\hfill\insertframenumber\,/\,\inserttotalframenumber}%
+    \insertshorttitle\hfill\insertframenumber\,/\,\hyperlink{slideoverview}{\inserttotalframenumber}}%
   \hspace{1em}\vskip4pt%
 }
 
@@ -131,6 +154,7 @@
 
 % ── Merit ────────────────────────────────────────────────
 \begin{frame}{Foredragsholderens merit}
+  \slidetarget
   \begin{columns}[c]
     % ── Left: bio bullets ──
     \begin{column}{0.50\textwidth}
@@ -190,6 +214,7 @@
 \end{frame}
 % ── Section 1 ────────────────────────────────────────────────
 \begin{frame}{GenAI as a Daily Companion}
+  \slidetarget
   \begin{itemize}
     \item Large Language Models are \textcolor{accentLight}{general-purpose reasoning tools}
     \item Available 24/7 — low friction, high throughput
@@ -205,6 +230,7 @@
 
 % ── Section 2 ────────────────────────────────────────────────
 \begin{frame}{Use-Cases — Documentation \& Communication}
+  \slidetarget
   \begin{itemize}
     \item \textcolor{yellow}{Drafting} technical documentation, model descriptions
     \item \textcolor{yellow}{Summarising} long regulatory texts, standards (e.g.\ IFRS\,17)
@@ -218,6 +244,7 @@
 \end{frame}
 
 \begin{frame}{Use-Cases — Review \& Quality Assurance}
+  \slidetarget
   \begin{itemize}
     \item Code review: spot bugs, suggest improvements, check style
     \item Spreadsheet auditing: formula consistency, edge-case testing
@@ -233,6 +260,7 @@
 \end{frame}
 
 \begin{frame}{Use-Cases — Discussion \& Ideation}
+  \slidetarget
   \begin{itemize}
     \item \textcolor{green}{Rubber-ducking}: explain a problem, get structured pushback
     \item Brainstorming model structures, risk factor hierarchies
@@ -247,6 +275,7 @@
 \end{frame}
 
 \begin{frame}{Use-Cases — Improving Own Work}
+  \slidetarget
   \begin{itemize}
     \item Refactoring existing code (R, Python, VBA, SQL \ldots)
     \item Transforming ad-hoc scripts into \textcolor{accentLight}{reproducible pipelines}
@@ -257,6 +286,7 @@
 
 % ── Section 3 ────────────────────────────────────────────────
 \begin{frame}{Learning in the Age of GenAI}
+  \slidetarget
   \begin{columns}[T]
     \begin{column}{0.48\textwidth}
       \textcolor{green}{\faThumbsUp}\enspace\textbf{Opportunities}
@@ -281,6 +311,7 @@
 
 % ── Section 4 ────────────────────────────────────────────────
 \begin{frame}{Cognitive Caveats}
+  \slidetarget
   \begin{enumerate}[label=\textcolor{accent}{\arabic*.}]
     \item \textbf{Automation bias} — trusting output because a machine said so
     \item \textbf{Cognitive offloading} — letting the tool think \emph{for} you
@@ -296,6 +327,7 @@
 
 % ── Section 5 ────────────────────────────────────────────────
 \begin{frame}{Guidelines for Responsible Use}
+  \slidetarget
   \begin{itemize}
     \item \textbf{Verify} — never ship AI output without expert review
     \item \textbf{Understand} — if you cannot explain it, you do not own it
@@ -313,6 +345,7 @@
 
 % ── Summary ──────────────────────────────────────────────────
 \begin{frame}{Summary}
+  \slidetarget
   \begin{center}
     \begin{tikzpicture}
       \node[rounded corners=4pt, fill=frameBorder, text=fg,
@@ -326,17 +359,44 @@
   \end{center}
 \end{frame}
 
-% ── Closing ──────────────────────────────────────────────────
+% ── Closing / Overview ────────────────────────────────────────
+\ifthumbsready
 {
 \setbeamertemplate{footline}{}
-\begin{frame}[plain,noframenumbering]
+\begin{frame}[plain,noframenumbering]{Overblik}
+  \hypertarget{slideoverview}{}
+  \vspace{-2pt}
+  \begin{center}
+    {\textcolor{accentLight}{\textbf{Overblik}} \enspace
+     \textcolor{dimmed}{--- klik for at navigere}}\\[6pt]
+    % Dynamic grid: 4 columns, auto-sized from \slidetarget count
+    \begin{tikzpicture}[every node/.style={inner sep=0pt}]
+      \foreach \i in {1,...,\theslideidx} {
+        \pgfmathtruncatemacro{\col}{mod(\i-1,4)}
+        \pgfmathtruncatemacro{\row}{div(\i-1,4)}
+        \node at (\col*3.55, -\row*2.1) {
+          \hyperlink{slide\i}{%
+            \includegraphics[page=\csname slidepage@\i\endcsname,width=3.4cm]{slides-thumbs}}%
+        };
+      }
+    \end{tikzpicture}
+  \end{center}
+\end{frame}
+}
+\else
+% Placeholder closing slide (used during thumbnail generation)
+{
+\setbeamertemplate{footline}{}
+\begin{frame}[plain,noframenumbering]{Overblik}
+  \hypertarget{slideoverview}{}
   \vfill
   \begin{center}
-    {\Large\textcolor{accentLight}{Thank you}}\\[12pt]
-    {\textcolor{dimmed}{Questions \& Discussion}}
+    {\Large\textcolor{accentLight}{Ses}}\\[12pt]
+    {\textcolor{dimmed}{Spørgsmål \& Diskussion}}
   \end{center}
   \vfill
 \end{frame}
 }
+\fi
 
 \end{document}
