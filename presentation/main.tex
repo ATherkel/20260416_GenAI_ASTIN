@@ -18,6 +18,9 @@
 \usepackage{hyperref}
 \usepackage{xcolor}
 \usepackage{tikz}
+\usetikzlibrary{positioning, arrows.meta}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
 \usepackage{fontawesome5}        % icons (available on Overleaf)
 \usepackage{enumitem}
 \setlist[itemize]{label=\textcolor{accent}{\textbullet}}
@@ -115,6 +118,7 @@
 % ── Outline ──────────────────────────────────────────────────
 \begin{frame}{Agenda}
   \begin{enumerate}[label=\textcolor{accent}{\arabic*.}]
+    \item Foredragsholderens merit
     \item GenAI as a daily companion
     \item Concrete use-cases for actuaries
     \item Learning in the age of GenAI
@@ -124,6 +128,66 @@
   \end{enumerate}
 \end{frame}
 
+% ── Merit ────────────────────────────────────────────────
+\begin{frame}{Foredragsholderens merit}
+  \begin{columns}[T]
+    % ── Left: bio bullets ──
+    \begin{column}{0.55\textwidth}
+      \begin{itemize}
+        \item Anders Therkelsen, 35 år
+        \item Oplært/opdraget af tre ledere:
+          \begin{itemize}
+            \item Helle Wicksell
+            \item Jette Sandqvist
+            \item Svend Haastrup
+          \end{itemize}
+        \item Far til Karl på 3 år og Frida på 5 måneder
+        \item I branchen siden 2015
+        \item Tidl. ASTIN-bestyrelsesmedlem, tidl.\\
+              efteruddannelsesudvalget, bachelorvejleder
+        \item Censor i matematik 2022--2026 og 2026--2030
+      \end{itemize}
+    \end{column}
+    % ── Right: career timeline ──
+    \begin{column}{0.42\textwidth}
+      \vspace{0.3cm}
+      \begin{tikzpicture}[%
+          every node/.style={font=\normalsize},
+          logo/.style={inner sep=0pt},
+          cname/.style={text=fg, font=\normalsize, anchor=east},
+          cyear/.style={text=dimmed, font=\normalsize, anchor=west},
+        ]
+        % All names have anchor=east → right edges at x=0
+        % Arrow runs vertically at x=2pt (between name and year)
+        \def\rowsep{1.5}
+
+        % ── Row 1: Codan ──
+        \node[cname] at (0, 0)          (c1name) {Codan};
+        \node[cyear] at (4pt, 0)        (c1year) {(2015--2020)};
+        \node[logo, right=6pt of c1year, anchor=west] (c1logo)
+          {\includegraphics[height=0.8cm]{codan_logo.png}};
+
+        % ── Row 2: PwC ──
+        \node[cname] at (0, -\rowsep)        (c2name) {PwC};
+        \node[cyear] at (4pt, -\rowsep)      (c2year) {(2020--2023)};
+        \node[logo, right=6pt of c2year, anchor=west] (c2logo)
+          {\includegraphics[height=0.8cm]{PwC_Company_Logo}};
+
+        % ── Row 3: Alm Brand Group ──
+        \node[cname] at (0, -2*\rowsep)      (c3name) {Alm Brand Group};
+        \node[cyear] at (4pt, -2*\rowsep)    (c3year) {(2023--\ldots)};
+        \node[logo, right=6pt of c3year, anchor=west] (c3logo)
+          {\includegraphics[height=0.8cm]{logo-alm-brand-group-rgb.png}};
+
+        % ── Vertical arrows at x=2pt ──
+        \draw[accent, thick, -{Stealth}]
+          (2pt, -0.25) -- (2pt, -\rowsep+0.25);
+        \draw[accent, thick, -{Stealth}]
+          (2pt, -\rowsep-0.25) -- (2pt, -2*\rowsep+0.25);
+      \end{tikzpicture}
+    \end{column}
+  \end{columns}
+\end{frame}
 % ── Section 1 ────────────────────────────────────────────────
 \begin{frame}{GenAI as a Daily Companion}
   \begin{itemize}
