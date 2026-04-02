@@ -1,16 +1,8 @@
 % ============================================================
 % GenAI in the Everyday Worklife of an Actuary
-% Minimal Beamer — VS Code Dark Modern / Light toggle
+% Minimal Beamer — swap theme via \input{theme-*} near the top
 % ============================================================
 \documentclass[aspectratio=169,10pt]{beamer}
-
-% ── Dark / Light toggle ─────────────────────────────────────
-% Set to true  → dark presentation (screen)
-% Set to false → light presentation (print-friendly)
-\newif\ifdarkmode
-\darkmodetrue
-% \darkmodefalse
-% ─────────────────────────────────────────────────────────────
 
 % ── HYBRID THUMBNAIL WORKFLOW (Overleaf): ────────────────────
 %   1. Set \thumbsready to false  → compiles without the overview grid
@@ -50,46 +42,31 @@
 \setlist[itemize]{label=\textcolor{accent}{\textbullet}}
 \usepackage{multicol}
 
-% ── Colour palettes ─────────────────────────────────────────
-\ifdarkmode
-  % VS Code "Dark Modern"
-  \definecolor{bg}{HTML}{1E1E1E}
-  \definecolor{fg}{HTML}{D4D4D4}
-  \definecolor{accent}{HTML}{007ACC}
-  \definecolor{accentLight}{HTML}{569CD6}
-  \definecolor{green}{HTML}{6A9955}
-  \definecolor{orange}{HTML}{CE9178}
-  \definecolor{yellow}{HTML}{DCDCAA}
-  \definecolor{dimmed}{HTML}{808080}
-  \definecolor{frameBorder}{HTML}{2D2D2D}
-\else
-  % Light counterpart (print-friendly)
-  \definecolor{bg}{HTML}{FFFFFF}
-  \definecolor{fg}{HTML}{1E1E1E}
-  \definecolor{accent}{HTML}{005A9E}
-  \definecolor{accentLight}{HTML}{0070C1}
-  \definecolor{green}{HTML}{098658}
-  \definecolor{orange}{HTML}{A31515}
-  \definecolor{yellow}{HTML}{795E26}
-  \definecolor{dimmed}{HTML}{6A6A6A}
-  \definecolor{frameBorder}{HTML}{D4D4D4}
-\fi
+% ── Theme selection ──────────────────────────────────────────
+% Uncomment exactly one line to choose the active colour theme.
+%   theme-dark          → VS Code Dark  (classic)
+%   theme-dark-modern   → VS Code Dark Modern
+%   theme-light         → VS Code Light (print-friendly)
+\input{theme-dark}
+% \input{theme-dark-modern}
+% \input{theme-light}
+% ─────────────────────────────────────────────────────────────
 
 % ── Beamer chrome ────────────────────────────────────────────
 \usetheme{default}
 \usecolortheme{default}
 
-\setbeamercolor{normal text}{fg=fg,bg=bg}
+\setbeamercolor{normal text}{fg=textfg,bg=slidebg}
 \setbeamercolor{structure}{fg=accent}
 \setbeamercolor{alerted text}{fg=orange}
-\setbeamercolor{frametitle}{fg=accentLight,bg=bg}
-\setbeamercolor{title}{fg=accentLight,bg=bg}
+\setbeamercolor{frametitle}{fg=accentLight,bg=slidebg}
+\setbeamercolor{title}{fg=accentLight,bg=slidebg}
 \setbeamercolor{subtitle}{fg=dimmed}
-\setbeamercolor{author}{fg=fg}
+\setbeamercolor{author}{fg=textfg}
 \setbeamercolor{date}{fg=dimmed}
-\setbeamercolor{footer}{fg=dimmed,bg=bg}
-\setbeamercolor{block title}{fg=bg,bg=accent}
-\setbeamercolor{block body}{fg=fg,bg=frameBorder}
+\setbeamercolor{footer}{fg=dimmed,bg=slidebg}
+\setbeamercolor{block title}{fg=slidebg,bg=accent}
+\setbeamercolor{block body}{fg=textfg,bg=frameBorder}
 \setbeamercolor{itemize item}{fg=accent}
 \setbeamercolor{itemize subitem}{fg=accentLight}
 
