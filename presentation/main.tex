@@ -99,14 +99,16 @@
 \author{Anders Therkelsen}
 \date{April 2026 \enspace · \enspace ASTIN}
 
+
+\setbeamertemplate{section in toc}{%
+  \textcolor{accent}{\inserttocsectionnumber.}~\inserttocsection}
+
 % ── Agenda item commands (single source of truth) ────────────
-\newcommand{\AgendaMerit}{Foredragsholderens merit}
-\newcommand{\AgendaExamples}{Anvendelseseksempler}
-\newcommand{\AgendaUseCases}{Concrete use-cases for actuaries}
-\newcommand{\AgendaLearning}{Learning in the age of GenAI}
-\newcommand{\AgendaCaveats}{Cognitive caveats \& pitfalls}
-\newcommand{\AgendaGuidelines}{Guidelines for responsible use}
-\newcommand{\AgendaSummary}{Summary}
+% \newcommand{\AgendaUseCases}{Concrete use-cases for actuaries}
+% \newcommand{\AgendaLearning}{Learning in the age of GenAI}
+% \newcommand{\AgendaCaveats}{Cognitive caveats \& pitfalls}
+% \newcommand{\AgendaGuidelines}{Guidelines for responsible use}
+% \newcommand{\AgendaSummary}{Summary}
 
 % ─────────────────────────────────────────────────────────────
 \begin{document}
@@ -128,19 +130,12 @@
 
 % ── Outline ──────────────────────────────────────────────────
 \begin{frame}{Agenda}
-  \begin{enumerate}[label=\textcolor{accent}{\arabic*.}]
-    \item \AgendaMerit
-    \item \AgendaExamples
-    \item \AgendaUseCases
-    \item \AgendaLearning
-    \item \AgendaCaveats
-    \item \AgendaGuidelines
-    \item \AgendaSummary
-  \end{enumerate}
+  \tableofcontents
 \end{frame}
 
 % ── Merit ────────────────────────────────────────────────
-\begin{frame}{\AgendaMerit}
+\section{Foredragsholderens merit}
+\begin{frame}{\insertsection}
   \slidetarget
   \begin{columns}[c]
     % ── Left: bio bullets ──
@@ -154,8 +149,8 @@
             \item Jette Sandqvist
             \item Svend Haastrup
           \end{itemize}
-        \item Tidl. ASTIN-bestyrelsesmedlem
-        \item Tidl. med i efteruddannelsesudvalget
+        % \item Tidl. ASTIN-bestyrelsesmedlem
+        % \item Tidl. med i efteruddannelsesudvalget
         \item 3x bachelorvejleder
         \item Censor siden 2022
       \end{itemize}
@@ -168,7 +163,7 @@
       \begin{tikzpicture}[%
           every node/.style={font=\normalsize},
           logo/.style={inner sep=0pt},
-          cname/.style={text=fg, font=\normalsize, anchor=east},
+          cname/.style={text=textfg, font=\normalsize, anchor=east},
           cyear/.style={text=dimmed, font=\normalsize, anchor=west},
         ]
         % All logos anchor=east at x=0, year at x=4pt
@@ -199,35 +194,63 @@
     \end{column}
   \end{columns}
 \end{frame}
-% ── Section 1 ────────────────────────────────────────────────
-\begin{frame}{\AgendaExamples}
+
+% ── Anvendelseseksempler ────────────────────────────────────────────────
+\section{Anvendelseseksempler}
+\begin{frame}{\insertsection}
     \slidetarget
     \begin{multicols}{2}
       \begin{enumerate}[label=\textcolor{accent}{\arabic*.}]
-        \item "uvigtige" unittests
-        \item Forslag til integrationstests
         \item Forbedre kodedokumentation
-          \begin{enumerate}[label=\textcolor{accentLight}{\arabic*.}]
-            \item Inline, docstrings, API docs, typehints
+          \begin{enumerate}[label=\textcolor{accentLight}{\alph*.}]
+            \item Inline, docstrings, API docs, typehints, README
             \item Markdown
           \end{enumerate}
         \item Kodereview
-          \begin{enumerate}[label=\textcolor{accentLight}{\arabic*.}]
+          \begin{enumerate}[label=\textcolor{accentLight}{\alph*.}]
             \item Har jeg glemt eller overset noget?
             \item Hvordan gør jeg det her bedre?
             \item Mere effektivt? Mere læsbar? Mere robust?
           \end{enumerate}
         \item Beskriv hvad jeg har lavet. Kom med forslag
-        \item Noget jeg ikke kan finde ud af: Opret "skills" (evt. med GenAI hjælp)
+        \item Noget jeg ikke kan finde ud af: Opret "skills" (fx med GenAI hjælp)
         \item Git
-          \begin{enumerate}[label=\textcolor{accentLight}{\arabic*.}]
+          \begin{enumerate}[label=\textcolor{accentLight}{\alph*.}]
             \item Commit-beskeder
             \item PR-beskrivelser
             \item PR review
           \end{enumerate}
+        \item Forklar kode jeg ikke har kendskab til
+        \item Debugging
+        \item \textcolor{accentLight}{Testing}: Unit, integration, functional, end-to-end, performance, etc.
       \end{enumerate}
     \end{multicols}
 \end{frame}
+
+\section{Læring}
+\begin{frame}{\insertsection}
+  \slidetarget
+  \begin{itemize}
+    \item Læring er en aktiv, konstruktiv proces — ikke passiv forbrug
+    \item Man lærer ikke at tegne ved at tegne efter
+    \item GPS
+  \end{itemize}
+
+  \vfill
+  {\small\textcolor{dimmed}{%
+    Vigtigt: brug det som et supplement til aktiv læring, ikke som en genvej.}}
+\end{frame}
+
+
+\section{Kognitive caveats}
+\begin{frame}{\insertsection}
+  \slidetarget
+  \begin{itemize}
+    \item .
+  \end{itemize}
+\end{frame}
+
+\section{Andet}
 
 \begin{frame}{GenAI i hverdagen}
   \slidetarget
@@ -243,6 +266,16 @@
     GenAI is most valuable when it meets domain knowledge halfway.
   \end{block}
 \end{frame}
+
+
+
+\section{A cautionary tale}
+\begin{frame}\insertsection
+\begin{itemize}
+    \item https://docs.litellm.ai/blog/security-update-march-2026
+\end{itemize}
+\end{frame}
+
 
 % ── Section 2 ────────────────────────────────────────────────
 \begin{frame}{Use-Cases — Documentation \& Communication}
@@ -301,7 +334,7 @@
 \end{frame}
 
 % ── Section 3 ────────────────────────────────────────────────
-\begin{frame}{\AgendaLearning}
+\begin{frame}{\insertsection}
   \slidetarget
   \begin{columns}[T]
     \begin{column}{0.48\textwidth}
@@ -326,7 +359,7 @@
 \end{frame}
 
 % ── Section 4 ────────────────────────────────────────────────
-\begin{frame}{\AgendaCaveats}
+\begin{frame}{\insertsection}
   \slidetarget
   \begin{enumerate}[label=\textcolor{accent}{\arabic*.}]
     \item \textbf{Automation bias} — trusting output because a machine said so
@@ -342,7 +375,7 @@
 \end{frame}
 
 % ── Section 5 ────────────────────────────────────────────────
-\begin{frame}{\AgendaGuidelines}
+\begin{frame}{\insertsection}
   \slidetarget
   \begin{itemize}
     \item \textbf{Verify} — never ship AI output without expert review
@@ -360,11 +393,11 @@
 \end{frame}
 
 % ── Summary ──────────────────────────────────────────────────
-\begin{frame}{\AgendaSummary}
+\begin{frame}{\insertsection}
   \slidetarget
   \begin{center}
     \begin{tikzpicture}
-      \node[rounded corners=4pt, fill=frameBorder, text=fg,
+      \node[rounded corners=4pt, fill=frameBorder, text=textfg,
             inner sep=12pt, text width=0.82\textwidth, align=center] {
         GenAI is a \textcolor{accentLight}{powerful amplifier} for actuarial work —\\[4pt]
         documentation, review, ideation, learning.\\[8pt]
@@ -375,15 +408,19 @@
   \end{center}
 \end{frame}
 
+
+
+
 % ── Closing / Overview ────────────────────────────────────────
 \ifthumbsready
 {
+\section{Overblik}
 \setbeamertemplate{footline}{}
-\begin{frame}[plain,noframenumbering]{Overblik}
+\begin{frame}[plain,noframenumbering]{\insertsection}
   \hypertarget{slideoverview}{}
   \vspace{-2pt}
   \begin{center}
-    {\textcolor{accentLight}{\textbf{Overblik}} \enspace
+    {\textcolor{accentLight}{\textbf{\insertsection}} \enspace
      \textcolor{dimmed}{--- klik for at navigere}}\\[6pt]
     % Dynamic grid: 4 columns, auto-sized from \slidetarget count
     \begin{tikzpicture}[every node/.style={inner sep=0pt}]
@@ -403,11 +440,11 @@
 % Placeholder closing slide (used during thumbnail generation)
 {
 \setbeamertemplate{footline}{}
-\begin{frame}[plain,noframenumbering]{Overblik}
+\begin{frame}[plain,noframenumbering]{\insertsection}
   \hypertarget{slideoverview}{}
   \vfill
   \begin{center}
-    {\Large\textcolor{accentLight}{Ses}}\\[12pt]
+    {\Large\textcolor{accentLight}{\insertsection}}\\[12pt]
     {\textcolor{dimmed}{Spørgsmål \& Diskussion}}
   \end{center}
   \vfill
