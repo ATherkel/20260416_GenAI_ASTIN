@@ -41,6 +41,8 @@
 \usepackage{enumitem}
 \setlist[itemize]{label=\textcolor{accent}{\textbullet}}
 \usepackage{multicol}
+\usepackage[multiple]{footmisc}
+\usepackage{csquotes}
 
 % ── Theme selection ──────────────────────────────────────────
 % Uncomment exactly one line to choose the active colour theme.
@@ -92,6 +94,21 @@
   {\color{accent}\rule{\textwidth}{0.4pt}}%
   \vskip2pt%
 }
+
+
+% -- Footnote
+
+\let\oldFootnote\footnote
+\newcommand\nextToken\relax
+
+\renewcommand\footnote[1]{%
+    \oldFootnote{#1}\futurelet\nextToken\isFootnote}
+
+\newcommand\isFootnote{%
+    \ifx\footnote\nextToken\textsuperscript{,}\fi}
+
+\newcommand{\citesource}[1]{\footnote{\hyperlink{refs}{\citeyear{#1}: \citetitle{#1}}}}
+
 
 % ── Meta ─────────────────────────────────────────────────────
 \title{Generativ AI i aktuarens hverdag}
