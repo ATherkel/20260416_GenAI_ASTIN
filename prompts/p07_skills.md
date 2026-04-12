@@ -2,7 +2,7 @@
 
 1. <details>
      <summary><code>/version-bump</code></summary>
-     <blockquote> Create a skill that adds a <code>/version-bump</code> slash command. The skill is for contributors to a Python package who may not know what Semantic Versioning (semVer) is. When invoked, the skill should: (a) briefly explain semVer — what major, minor, and patch mean with simple examples, (b) ask the user what kind of change they made (breaking, new feature, or fix), (c) read the current version from pyproject.toml, (d) bump the appropriate part of the version number, and (e) update pyproject.toml with the new version.</blockquote>
+     <blockquote> Create a skill that adds a <code>/version-bump</code> slash command. The skill is for contributors to a Python package who may not know what Semantic Versioning (semVer) is. When invoked, the skill should: (a) briefly explain semVer — what major, minor, and patch mean with simple examples, (b) ask the user what kind of change they made (breaking, new feature, fix or other), (c) read the current version from `pyproject.toml`, (d) bump the appropriate part of the version number, and (e) update `pyproject.toml` with the new version.</blockquote>
     </details>
     <br>
 
