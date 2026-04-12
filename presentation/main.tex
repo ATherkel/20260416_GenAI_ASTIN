@@ -75,7 +75,8 @@
 \setbeamercolor{itemize subitem}{fg=accentLight}
 
 \setbeamerfont{title}{series=\bfseries,size=\Large}
-\setbeamerfont{frametitle}{series=\bfseries,size=\large}
+\setbeamerfont{frametitle}{series=\bfseries,size=\Large}
+\setbeamerfont{footnote}{size=\scriptsize}
 
 % suppress navigation symbols
 \setbeamertemplate{navigation symbols}{}
@@ -107,9 +108,24 @@
     \oldFootnote{#1}\futurelet\nextToken\isFootnote}
 
 \newcommand\isFootnote{%
-    \ifx\footnote\nextToken\textsuperscript{,}\fi}
+    \ifx\footnote\nextToken\textsuperscript{,}%
+    \else\ifx\citesource\nextToken\textsuperscript{,}\fi\fi}
 
-\newcommand{\citesource}[1]{\footnote{\hyperlink{refs}{\citeyear{#1}: \citetitle{#1}}}}
+\DeclareCiteCommand{\rawcitesource}
+  {}
+  {\oldFootnote{%
+    \iffieldundef{doi}
+      {\iffieldundef{url}
+        {\hyperlink{refs}{\printfield{year}: \printfield{title}}}
+        {\href{\thefield{url}}{\printfield{year}: \printfield{title}}}}
+      {\href{https://doi.org/\thefield{doi}}{\printfield{year}: \printfield{title}}}%
+  }}
+  {}
+  {}
+
+\newcommand{\citesource}[1]{%
+  \rawcitesource{#1}%
+  \futurelet\nextToken\isFootnote}
 
 
 % ── Meta ─────────────────────────────────────────────────────
@@ -278,14 +294,22 @@
 
 \section{Læring}
 \begin{frame}{\insertsection}
-Hvad er læring, og hvordan foregår det? Og hvorfor er det relevant?
+  \begin{columns}[c]
+    \begin{column}{0.55\textwidth}
+      Hvad er læring, og hvordan foregår det? Og hvorfor er det relevant?
 
-\textcolor{accentLight}{Vi er jo færdiguddannede?}
+      \textcolor{accentLight}{Vi er jo færdiguddannede?}
+    \end{column}
+    \begin{column}{0.40\textwidth}
+      \centering
+      \includegraphics[width=\linewidth,height=0.7\textheight,keepaspectratio]{learning.jpg}
+    \end{column}
+  \end{columns}
 \end{frame}
   
 \begin{frame}{\insertsection}
   \slidetarget
-  Læring er en \textcolor{yellow}{aktiv}, \textcolor{yellow}{konstruktiv} proces — ikke passiv forbrug
+  Læring er en \textcolor{yellow}{aktiv}, \textcolor{yellow}{konstruktiv} proces og ikke passivt forbrug. Fx
   \begin{itemize}
     \item Tegne efter
     \item GPS\footnote{
@@ -294,6 +318,8 @@ Hvad er læring, og hvordan foregår det? Og hvorfor er det relevant?
     \item \emph{Jeg lærer bedst ved at skrive ting ned\/}\footnote{%
       \href{https://psycnet.apa.org/doiLanding?doi=10.1037\%2F0278-7393.4.6.592}
     {1978: The generation effect: Delineation of a phenomenon.}}
+    \item Hvordan lærer \textcolor{accentLight}{børn} at \textcolor{yellow}{tale}? \textcolor{yellow}{Gå}? \textcolor{yellow}{Bevæge armene}?
+
   \end{itemize}
 
   \vfill
@@ -304,40 +330,33 @@ Hvad er læring, og hvordan foregår det? Og hvorfor er det relevant?
 \end{frame}
 
 
-\section{Kognitive caveats}
+\section{Opmærksomhedspunkter}
 \begin{frame}{\insertsection}
   \slidetarget
-  \begin{itemize}
-    \item \emph{Kognitiv gæld}\footnote{\hyperlink{refs}{\citeyear{rockoder2026cognitivedebt}: \citetitle{rockoder2026cognitivedebt}. Termen omtales oprindeligt i \citeyear{kosmyna2025brainchatgptaccumulationcognitive}: \citetitle{kosmyna2025brainchatgptaccumulationcognitive}.}}
-  \end{itemize}
+  \begin{columns}[c]
+    \begin{column}{0.55\textwidth}
+      \begin{itemize}
+        \item Kognition
+        \begin{itemize}
+          \item \emph{Kognitiv gæld}\/\citesource{rockoder2026cognitivedebt}.
+          \textcolor{dimmed}{Term oprindeligt fra juni 2025, MIT Media Lab(preprint)\citesource{kosmyna2025brainchatgptaccumulationcognitive}.}
+          \item \emph{The slot machine effect}\/\citesource{merwin2025slotmachineeffect}\citesource{gerard2025generativeairunsongamblingaddiction}
+        \end{itemize}
+        \item A cautionary tale
+        \begin{itemize}
+            \item https://docs.litellm.ai/blog/security-update-march-2026
+            \item https://www.anthropic.com/glasswing
+        \end{itemize}
+      \end{itemize}
+    \end{column}
+    \begin{column}{0.40\textwidth}
+      \centering
+      \includegraphics[width=\linewidth,height=0.7\textheight,keepaspectratio]{OverleafGitHub.png}
+    \end{column}
+  \end{columns}
 \end{frame}
 
-\section{Andet}
 
-% \begin{frame}{GenAI i hverdagen}
-%   \slidetarget
-%   \begin{itemize}
-%     \item Large Language Models are \textcolor{accentLight}{general-purpose reasoning tools}
-%     \item Available 24/7 — low friction, high throughput
-%     \item Integration into IDEs, browsers, office suites
-%     \item Not a replacement for expertise; an \textcolor{green}{amplifier}
-%   \end{itemize}
-
-%   \vfill
-%   \begin{block}{Key principle}
-%     GenAI is most valuable when it meets domain knowledge halfway.
-%   \end{block}
-% \end{frame}
-
-
-
-\section{A cautionary tale}
-\begin{frame}\insertsection
-\begin{itemize}
-    \item https://docs.litellm.ai/blog/security-update-march-2026
-    \item https://www.anthropic.com/glasswing
-\end{itemize}
-\end{frame}
 
 
 % ── Section 2 ────────────────────────────────────────────────
@@ -463,9 +482,10 @@ Hvad er læring, og hvordan foregår det? Og hvorfor er det relevant?
     \begin{tikzpicture}
       \node[rounded corners=4pt, fill=frameBorder, text=textfg,
             inner sep=12pt, text width=0.82\textwidth, align=center] {
-        GenAI kan anvendes som en \textcolor{accentLight}{forstærker} —\\[4pt]
-        kodning, dokumentation, gennemgang, idéudvikling, læring.\\[8pt]
-        Nøglen er \textcolor{green}{bevidst brug}.
+        GenAI kan anvendes som en \textcolor{accentLight}{forstærker}\\
+        til kodning, dokumentation, gennemgang, idéudvikling, læring.\\[8pt]
+        Min anbefaling er \textcolor{green}{bevidst brug}.\\[12pt]
+        Se den her video: \href{https://www.youtube.com/watch?v=dcolM6W5Odc}{\emph{The AI Paradox}, af \emph{Art of the Problem}, 2025}
       };
     \end{tikzpicture}
   \end{center}
@@ -490,8 +510,7 @@ Hvad er læring, og hvordan foregår det? Og hvorfor er det relevant?
   \hypertarget{slideoverview}{}
   \vspace{-2pt}
   \begin{center}
-    {\textcolor{accentLight}{\textbf{\insertsection}} \enspace
-     \textcolor{dimmed}{--- klik for at navigere}}\\[6pt]
+    {\textcolor{accentLight}{\textbf{\insertsection}}}\\[6pt]
     % Dynamic grid: 4 columns, auto-sized from \slidetarget count
     \begin{tikzpicture}[every node/.style={inner sep=0pt}]
       \foreach \i in {1,...,\theslideidx} {
