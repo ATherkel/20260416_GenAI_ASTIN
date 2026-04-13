@@ -27,11 +27,14 @@
   \expandafter\xdef\csname slidepage@\theslideidx\endcsname{\thepage}%
 }
 
+\usepackage[danish, english]{babel}
+\usepackage{csquotes}
 \usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage{lmodern}
 \usepackage{microtype}
 \usepackage{hyperref}
+\hypersetup{pdfpagelayout=SinglePage}
 \usepackage{xcolor}
 \usepackage{tikz}
 \usetikzlibrary{positioning, arrows.meta}
@@ -42,9 +45,14 @@
 \setlist[itemize]{label=\textcolor{accent}{\textbullet}}
 \usepackage{multicol}
 \usepackage[multiple]{footmisc}
+\usepackage{footnote}
+\makesavenoteenv{columns}
+\usepackage{truncate}
 \usepackage{csquotes}
 \usepackage[backend=biber,style=authoryear,doi=true,url=true]{biblatex}
 \addbibresource{bibliography.bib}
+
+\selectlanguage{danish}
 
 % ── Theme selection ──────────────────────────────────────────
 % Uncomment exactly one line to choose the active colour theme.
@@ -76,7 +84,6 @@
 
 \setbeamerfont{title}{series=\bfseries,size=\Large}
 \setbeamerfont{frametitle}{series=\bfseries,size=\Large}
-\setbeamerfont{footnote}{size=\scriptsize}
 
 % suppress navigation symbols
 \setbeamertemplate{navigation symbols}{}
@@ -100,6 +107,17 @@
 
 
 % -- Footnote
+
+% The footnote package (\makesavenoteenv) bypasses beamer's template system,
+% so we override \@makefntext directly for font size + truncation.
+\makeatletter
+\renewcommand\@makefntext[1]{%
+  \fontsize{4}{4.8}\selectfont
+  \setlength{\parskip}{0pt}%
+  \noindent\truncate{\linewidth}{\@thefnmark.\,#1}%
+}
+\makeatother
+\setlength{\footnotesep}{2pt}
 
 \let\oldFootnote\footnote
 \newcommand\nextToken\relax
@@ -231,7 +249,7 @@
 \end{frame}
 
 % ── Anvendelseseksempler ────────────────────────────────────────────────
-\section{Anvendelseseksempler}
+\section{Anvendelseseksempler - Programmering}
 % \begin{frame}{\insertsection}
 %   \slidetarget
 %   \begin{itemize}
@@ -242,7 +260,7 @@
 %   \end{itemize}
 % \end{frame}
 
-\begin{frame}{\insertsection - Programmering}
+\begin{frame}{\insertsection}
     \slidetarget
     \begin{multicols}{2}
       \begin{enumerate}[label=\textcolor{accent}{\arabic*.}]
@@ -272,8 +290,8 @@
       \end{enumerate}
     \end{multicols}
 \end{frame}
-
-\begin{frame}{\insertsection - Dokumentation \& mails \& slides}
+\section{Anvendelseseksempler - Dokumentation \& kommunikation}
+\begin{frame}{\insertsection}
     \slidetarget
       \begin{itemize}
         \item Microsoft 365 Copilot til Officepakken (Word, Outlook, PowerPoint, \textcolor{accentLight}{mødereferater})
@@ -292,13 +310,13 @@
       \end{itemize}
 \end{frame}
 
-\section{Læring}
+\section{Læring I}
 \begin{frame}{\insertsection}
   \begin{columns}[c]
     \begin{column}{0.55\textwidth}
       Hvad er læring, og hvordan foregår det? Og hvorfor er det relevant?
 
-      \textcolor{accentLight}{Vi er jo færdiguddannede?}
+      \textcolor{accentLight}{\emph{Vi er jo færdiguddannede?}}
     \end{column}
     \begin{column}{0.40\textwidth}
       \centering
@@ -306,20 +324,19 @@
     \end{column}
   \end{columns}
 \end{frame}
-  
+\section{Læring II}
 \begin{frame}{\insertsection}
   \slidetarget
-  Læring er en \textcolor{yellow}{aktiv}, \textcolor{yellow}{konstruktiv} proces og ikke passivt forbrug. Fx
+  Læring er en \textcolor{yellow}{aktiv}, \textcolor{yellow}{konstruktiv} proces og \textcolor{orange}{ikke} passivt forbrug. Fx
   \begin{itemize}
     \item Tegne efter
-    \item GPS\footnote{
+    \item Køre med/uden GPS\footnote{
       \href{https://www.nature.com/articles/s41598-020-62877-0}
       {2020: Habitual use of GPS negatively impacts spatial memory during self-guided navigation}}
-    \item \emph{Jeg lærer bedst ved at skrive ting ned\/}\footnote{%
+    \item Udsagn som \textquote{\emph{jeg lærer bedst ved at skrive ting ned}}\footnote{%
       \href{https://psycnet.apa.org/doiLanding?doi=10.1037\%2F0278-7393.4.6.592}
     {1978: The generation effect: Delineation of a phenomenon.}}
     \item Hvordan lærer \textcolor{accentLight}{børn} at \textcolor{yellow}{tale}? \textcolor{yellow}{Gå}? \textcolor{yellow}{Bevæge armene}?
-
   \end{itemize}
 
   \vfill
@@ -344,10 +361,22 @@
         \end{itemize}
         \item A cautionary tale
         \begin{itemize}
-            \item https://docs.litellm.ai/blog/security-update-march-2026
-            \item https://www.anthropic.com/glasswing
+            \item \href{https://docs.litellm.ai/blog/security-update-march-2026}{LiteLLM: Security Update: Suspected Supply Chain Incident}
+            \item \href{https://www.anthropic.com/glasswing}{Anthropic: Glasswing}
+            \item Linux: Mennesker har ansvaret\citesource{killian2026linuxlaw}\citesource{linuxkernel2026aicodingassistants}
         \end{itemize}
       \end{itemize}
+%       Hvordan gør de det i IT?
+%       Signed-off-by and Developer Certificate of Origin
+% AI agents MUST NOT add Signed-off-by tags. Only humans can legally certify the Developer Certificate of Origin (DCO). The human submitter is responsible for:
+
+% Reviewing all AI-generated code
+
+% Ensuring compliance with licensing requirements
+
+% Adding their own Signed-off-by tag to certify the DCO
+
+% Taking full responsibility for the contribution
     \end{column}
     \begin{column}{0.40\textwidth}
       \centering
@@ -484,7 +513,7 @@
             inner sep=12pt, text width=0.82\textwidth, align=center] {
         GenAI kan anvendes som en \textcolor{accentLight}{forstærker}\\
         til kodning, dokumentation, gennemgang, idéudvikling, læring.\\[8pt]
-        Min anbefaling er \textcolor{green}{bevidst brug}.\\[12pt]
+        Min anbefaling er kortfattet: \textcolor{green}{Bevidst brug}.\\[12pt]
         Se den her video: \href{https://www.youtube.com/watch?v=dcolM6W5Odc}{\emph{The AI Paradox}, af \emph{Art of the Problem}, 2025}
       };
     \end{tikzpicture}
