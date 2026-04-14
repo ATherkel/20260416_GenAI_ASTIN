@@ -13,3 +13,6 @@ dev = [
     "pytest",
     "pytest-cov",
 ]
+
+[tool.ty.environment]
+python = ".venv"
