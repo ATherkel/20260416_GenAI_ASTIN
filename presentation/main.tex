@@ -2,7 +2,7 @@
 % GenAI in the Everyday Worklife of an Actuary
 % Minimal Beamer — swap theme via \input{theme-*} near the top
 % ============================================================
-\documentclass[aspectratio=169,10pt]{beamer}
+\documentclass[aspectratio=1610,10pt]{beamer}
 
 % ── HYBRID THUMBNAIL WORKFLOW (Overleaf): ────────────────────
 %   1. Set \thumbsready to false  → compiles without the overview grid
@@ -26,6 +26,9 @@
   % record PDF page number for this slide index
   \expandafter\xdef\csname slidepage@\theslideidx\endcsname{\thepage}%
 }
+% Total tracked slides from *previous* compile (via .aux file).
+% Allows the overview grid to include slides that appear after it.
+\providecommand{\totalslides}{0}
 
 \usepackage[danish, english]{babel}
 \usepackage[T1]{fontenc}
@@ -169,6 +172,7 @@
 {
 \setbeamertemplate{footline}{}
 \begin{frame}[plain,noframenumbering]
+  \slidetarget
   \vfill
   \begin{center}
     {\usebeamerfont{title}\usebeamercolor[fg]{title}\inserttitle}\\[8pt]
@@ -182,11 +186,12 @@
 
 % ── Outline ──────────────────────────────────────────────────
 \begin{frame}{Agenda}
+  \slidetarget
   \tableofcontents
 \end{frame}
 
 % ── Merit ────────────────────────────────────────────────
-\section{Foredragsholderens merit}
+\section{Om mig}
 \begin{frame}{\insertsection}
   \slidetarget
   \begin{columns}[c]
@@ -311,6 +316,7 @@
 
 \section{Læring I}
 \begin{frame}{\insertsection}
+  \slidetarget
   \begin{columns}[c]
     \begin{column}{0.55\textwidth}
       Hvad er læring, og hvordan foregår det? Og hvorfor er det relevant?
@@ -507,15 +513,17 @@
 \begin{frame}{\insertsection}
   \slidetarget
   \begin{center}
+    \begin{savenotes}
     \begin{tikzpicture}
       \node[rounded corners=4pt, fill=frameBorder, text=textfg,
             inner sep=12pt, text width=0.82\textwidth, align=center] {
         GenAI kan anvendes som en \textcolor{accentLight}{forstærker}\\
         til kodning, dokumentation, gennemgang, idéudvikling, læring.\\[8pt]
         Min anbefaling er kortfattet: \textcolor{green}{Bevidst brug}.\\[12pt]
-        Se den her video: \href{https://www.youtube.com/watch?v=dcolM6W5Odc}{\emph{The AI Paradox}, af \emph{Art of the Problem}, 2025} på YouTube.
+        Se den her video: \href{https://www.youtube.com/watch?v=dcolM6W5Odc}{\emph{The AI Paradox}} af \emph{Art of the Problem}, 2025 på YouTube\citesource{artoftheproblem2025theaiparadox}.
       };
     \end{tikzpicture}
+    \end{savenotes}
   \end{center}
 \end{frame}
 
@@ -530,10 +538,11 @@
   \hypertarget{slideoverview}{}
   \vspace{-2pt}
   \begin{center}
-    {\textcolor{accentLight}{\textbf{\insertsection}}}\\[6pt]
+    % {\textcolor{accentLight}{\textbf{\insertsection}}}\\[6pt]
     % Dynamic grid: 4 columns, auto-sized from \slidetarget count
     \begin{tikzpicture}[every node/.style={inner sep=0pt}]
-      \foreach \i in {1,...,\theslideidx} {
+      \ifnum\totalslides>0
+      \foreach \i in {1,...,\totalslides} {
         \pgfmathtruncatemacro{\col}{mod(\i-1,4)}
         \pgfmathtruncatemacro{\row}{div(\i-1,4)}
         \node at (\col*3.55, -\row*2.1) {
@@ -541,6 +550,7 @@
             \includegraphics[page=\csname slidepage@\i\endcsname,width=3.4cm]{slides-thumbs}}%
         };
       }
+      \fi
     \end{tikzpicture}
   \end{center}
 \end{frame}
@@ -564,10 +574,26 @@
 
 
 \section{Referencer}
+{
+% Track every continuation frame (allowframebreaks) in the thumbnail grid
+\addtobeamertemplate{frametitle continuation}{}{\slidetarget}
 \begin{frame}[allowframebreaks]{\insertsection}
   \hypertarget{refs}{}
   \printbibliography
 \end{frame}
+}
 
+% Write final slide count and page mappings to .aux for the overview grid
+\makeatletter
+\immediate\write\@auxout{\string\gdef\string\totalslides{\theslideidx}}%
+\ifnum\value{slideidx}>0
+  \foreach \n in {1,...,\theslideidx} {%
+    \immediate\write\@auxout{%
+      \string\expandafter\string\gdef
+      \string\csname\space slidepage@\n\string\endcsname
+      {\csname slidepage@\n\endcsname}}%
+  }%
+\fi
+\makeatother
 
 \end{document}
