@@ -16,7 +16,7 @@ from src import s02_pipeline as p
 # DBTITLE 1,load data
 myclaims = spark.table("claims")
 
-claims_df = p.load_claims(myclaims)
+claims_df = myclaims.toPandas()
 ratio = p.compute_loss_ratio(claims_df)
 p.save_report(ratio, "report.txt")
 print(f"Loss ratio: {ratio:.2%}")
