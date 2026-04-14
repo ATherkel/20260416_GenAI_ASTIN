@@ -6,7 +6,14 @@ def load_claims(path, **kwargs):
     return pd.read_excel(path, **kwargs)
 
 
-def compute_loss_ratio(df):
+def compute_loss_ratio(df, by=None):
+    if by is not None:
+        grouped = df.groupby(by)
+        premium = grouped["premium"].sum()
+        incurred = grouped["incurred"].sum()
+        result = incurred / premium
+        result.name = "loss_ratio"
+        return result.replace([float("inf"), float("-inf")], float("nan"))
     total_premium = df["premium"].sum()
     if total_premium == 0:
         raise ZeroDivisionError("Total premium is zero; cannot compute loss ratio.")
