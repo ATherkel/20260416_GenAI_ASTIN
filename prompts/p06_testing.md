@@ -2,15 +2,13 @@
 
 File: [s06_needs_testing.py](../src/s06_needs_testing.py)
 
-1. > Generate unit tests for this module using pytest.
+1. > Generate one unit test for this module using pytest.
 
-2. > Add parametrized tests for multiple `(alpha, beta)` combinations.
+2. > Add one parametrized test for multiple `(alpha, beta)` combinations.
 
-3. > Add edge-case tests for invalid inputs.
+3. > Add one edge-case test for invalid inputs.
 
-4. > Add property-based tests verifying that `CDF(quantile(p)) ≈ p` and `PDF ≥ 0` for all valid inputs.
-
-5. > Add an integration test that numerically integrates the PDF over `[0, ∞)` and checks the result is 1.
+4. > ``Add one property-based test verifying that `CDF(quantile(p)) \approx p` and `PDF ≥ 0` for all valid inputs.``
 
 6. > Add a performance benchmark testing 100 000 evaluations of `pareto_pdf`.
 
