@@ -26,6 +26,46 @@ class TestParetoCdfBasic:
         assert vals == sorted(vals)
 
 
+class TestParetoCdfParametrized:
+    @pytest.mark.parametrize(
+        "x, alpha, beta, expected",
+        [
+            (100, 1, 100, 0.5),
+            (100, 2, 100, 0.75),
+            (100, 3, 100, 0.875),
+            (200, 2, 200, 0.75),
+            (50, 1, 50, 0.5),
+            (100, 0.5, 100, 1 - (0.5) ** 0.5),
+            (500, 2, 1000, 1 - (1000 / 1500) ** 2),
+            (0, 5, 50, 0.0),
+        ],
+    )
+    def test_known_values(self, x, alpha, beta, expected):
+        assert pareto_cdf(x, alpha, beta) == pytest.approx(expected)
+
+    @pytest.mark.parametrize(
+        "alpha, beta",
+        [(1, 100), (2, 100), (3, 50), (0.5, 200), (5, 1000), (10, 10)],
+    )
+    def test_zero_gives_zero(self, alpha, beta):
+        assert pareto_cdf(0, alpha, beta) == pytest.approx(0.0)
+
+    @pytest.mark.parametrize(
+        "alpha, beta",
+        [(1, 100), (2, 100), (3, 50), (0.5, 200), (5, 1000), (10, 10)],
+    )
+    def test_large_x_approaches_one(self, alpha, beta):
+        assert pareto_cdf(1e12, alpha, beta) == pytest.approx(1.0, abs=1e-4)
+
+    @pytest.mark.parametrize(
+        "alpha, beta",
+        [(1, 100), (2, 100), (3, 50), (0.5, 200), (5, 1000), (10, 10)],
+    )
+    def test_monotonically_increasing(self, alpha, beta):
+        vals = [pareto_cdf(x, alpha, beta) for x in [0, 10, 50, 100, 500]]
+        assert vals == sorted(vals)
+
+
 class TestParetoCdfEdgeCases:
     def test_alpha_negative_raises(self):
         with pytest.raises(ValueError, match="alpha and beta must be positive"):
