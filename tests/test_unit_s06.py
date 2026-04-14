@@ -86,3 +86,26 @@ class TestParetoCdfEdgeCases:
     def test_x_negative_raises(self):
         with pytest.raises(ValueError, match="x must be non-negative"):
             pareto_cdf(-1, alpha=2, beta=100)
+
+    @pytest.mark.parametrize(
+        "alpha, beta",
+        [(-1, -1), (0, 0), (-100, 50), (50, -100)],
+    )
+    def test_both_params_invalid_raises(self, alpha, beta):
+        with pytest.raises(ValueError):
+            pareto_cdf(10, alpha=alpha, beta=beta)
+
+    @pytest.mark.parametrize("x", [-0.001, -1e-10, -1e6])
+    def test_x_negative_parametrized(self, x):
+        with pytest.raises(ValueError, match="x must be non-negative"):
+            pareto_cdf(x, alpha=2, beta=100)
+
+    @pytest.mark.parametrize("alpha", [-1e-10, -100, -0.5])
+    def test_alpha_negative_parametrized(self, alpha):
+        with pytest.raises(ValueError, match="alpha and beta must be positive"):
+            pareto_cdf(10, alpha=alpha, beta=100)
+
+    @pytest.mark.parametrize("beta", [-1e-10, -100, -0.5])
+    def test_beta_negative_parametrized(self, beta):
+        with pytest.raises(ValueError, match="alpha and beta must be positive"):
+            pareto_cdf(10, alpha=2, beta=beta)
