@@ -9,3 +9,4 @@ This repository is a live presentation showcasing GitHub Copilot capabilities fo
 - Do not suggest improvements, tests, or refactors unless that is the explicit topic of the current exercise.
 - Do not add docstrings, type hints, or comments proactively — only when asked.
 - Each `src/sXX_*.py` file is paired with a specific prompt exercise. Scoped instructions for each file are in `.github/instructions/`.
+- If any exercise requires Python, use the one from the venv in `.venv/`.
