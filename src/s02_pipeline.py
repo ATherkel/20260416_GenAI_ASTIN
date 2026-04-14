@@ -7,7 +7,10 @@ def load_claims(path, **kwargs):
 
 
 def compute_loss_ratio(df):
-    return df["incurred"].sum() / df["premium"].sum()
+    total_premium = df["premium"].sum()
+    if total_premium == 0:
+        raise ZeroDivisionError("Total premium is zero; cannot compute loss ratio.")
+    return df["incurred"].sum() / total_premium
 
 
 def show_table(df):
