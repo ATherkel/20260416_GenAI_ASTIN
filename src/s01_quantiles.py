@@ -22,3 +22,8 @@ def pareto_quantile(p: float, alpha: float, beta: float) -> float:
     if beta <= 0:
         raise ValueError(f"beta must be positive, got {beta}")
     return beta * ((1 - p) ** (-1 / alpha) - 1)
+
+
+if __name__ == "__main__":
+    q = pareto_quantile(0.99, alpha=2.0, beta=1000.0)
+    print(f"99th percentile: {q:.2f}")
