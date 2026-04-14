@@ -22,3 +22,11 @@ def newton_raphson(
     return x
 
 
+if __name__ == "__main__":
+    # Find the root of f(x) = x^2 - 2, i.e. sqrt(2)
+    root = newton_raphson(
+        func=lambda x: x**2 - 2,
+        derivative=lambda x: 2 * x,
+        initial_guess=1.0,
+    )
+    print(f"sqrt(2) ≈ {root}")
