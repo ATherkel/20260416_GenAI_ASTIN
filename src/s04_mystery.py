@@ -13,13 +13,3 @@ def mystery(f, df, x0, t=1e-10, m_iter=100):
     return x
 
 
-if __name__ == "__main__":
-
-    def f(x):
-        return x**2 - 2
-
-    def df(x):
-        return 2 * x
-
-    mystery_value = mystery(f, df, x0=1.0)
-    print(f"Estimated mystery value: {mystery_value:.12f}")
