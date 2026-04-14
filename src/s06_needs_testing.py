@@ -1,6 +1,7 @@
 err_msg_positive = "alpha and beta must be positive"
 err_msg_non_negative = "x must be non-negative"
 
+
 def pareto_pdf(x: float, alpha: float, beta: float) -> float:
     if alpha <= 0 or beta <= 0:
         raise ValueError(err_msg_positive)
