@@ -1,7 +1,7 @@
 """Quantile functions for heavy-tailed distributions."""
 
 
-def pareto_quantile(p, alpha, beta):
+def pareto_quantile(p: float, alpha: float, beta: float) -> float:
     """Compute the quantile of a Pareto distribution.
 
     Args:
